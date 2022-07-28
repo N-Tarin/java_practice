@@ -1,26 +1,19 @@
 package jp.gihyo.projava.tasklist;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Controller
 public class HomeController {
-    @RequestMapping("/hello")
-    @ResponseBody
-    String hello() {
-        return """
-                <html>
-                    <head><title>Hello</title></head>
-                    <body>
-                        <h1>Hello</h1>
-                        <p>
-                            It works!<br>
-                            現在時刻は%sです。
-                        </p>
-                    </body>    
-                </html>
-                """.formatted(LocalDateTime.now());
+    @RequestMapping("/greeting")
+    String hello(Model model) {
+        LocalTime time = LocalTime.now();
+        String greeting = "Morning";
+
+        model.addAttribute("greeting", greeting);
+        model.addAttribute("time", time);
+        return "greeting";
     }
 }
