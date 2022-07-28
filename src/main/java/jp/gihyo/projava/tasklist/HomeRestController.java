@@ -16,12 +16,13 @@ public class HomeRestController {
     record TaskItem(String id, String task, String deadline, boolean done) {}
     private List<TaskItem> taskItems = new ArrayList<>();
 
-    @GetMapping("/restlist")
-    String listItems() {
-        String result = taskItems.stream()
-                .map(TaskItem::toString)
-                .collect(Collectors.joining(","));
-        return result;
+    @RequestMapping("/resthello")
+    String hello() {
+        return """
+                Hello.
+                It works!
+                現在の時刻は%sです。
+               """.formatted(LocalDateTime.now());
     }
 
     @GetMapping("/restadd")
@@ -33,12 +34,12 @@ public class HomeRestController {
 
         return "タスクを追加しました。";
     }
-    @RequestMapping("/resthello")
-    String hello() {
-        return """
-                Hello.
-                It works!
-                現在の時刻は%sです。
-               """.formatted(LocalDateTime.now());
+
+    @GetMapping("/restlist")
+    String listItems() {
+        String result = taskItems.stream()
+                .map(TaskItem::toString)
+                .collect(Collectors.joining(","));
+        return result;
     }
 }
